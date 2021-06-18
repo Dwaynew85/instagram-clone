@@ -3,6 +3,10 @@ import React from 'react';
 
 import * as firebase from 'firebase';
 
+if(firebase.apps.length === 0){
+  firebase.initializeApp(FIREBASE_CONFIG)
+}
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
