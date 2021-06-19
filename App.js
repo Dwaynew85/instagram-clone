@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { FIREBASE_CONFIG } from "@env"
+import { FIREBASE_CONFIG } from "react-native-dotenv"
 
 import firebase from 'firebase';
 
