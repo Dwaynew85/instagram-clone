@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { FIREBASE_CONFIG } from "@env"
 
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 
 if(firebase.apps.length === 0){
   firebase.initializeApp(FIREBASE_CONFIG)
