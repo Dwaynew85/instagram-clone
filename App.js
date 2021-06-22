@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
 import firebase from 'firebase';
 
 const firebaseConfig = {
@@ -23,13 +24,53 @@ import LandingScreen from './components/auth/Landing'
 import RegisterScreen from './components/auth/Register'
 
 const Stack = createStackNavigator();
+
 export default function App() {
+  const [loaded, setLoaded] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if(!user) {
+        setLoggedIn(false)
+        setLoaded(true)
+      } else {
+        setLoggedIn(true)
+        setLoaded(true)
+      }      
+    })
+  }, [])
+
+  const checkLoaded = () => {
+    if(!loaded){
+      return(
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text>Loading</Text>
+        </View>
+      )
+    }
+  }
+
+  const checkLogin = () => {
+    if(!loggedIn) {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Landing">
+            <Stack.Screen name="Landing" component={LandingScreen} options={{headerShown: false }}/>
+            <Stack.Screen name="Register" component={RegisterScreen}/>
+          </Stack.Navigator>
+        </NavigationContainer>
+      )
+    }
+  }
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Landing">
-        <Stack.Screen name="Landing" component={LandingScreen} options={{headerShown: false }}/>
-        <Stack.Screen name="Register" component={RegisterScreen}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      {checkLoaded()}
+      {checkLogin()}
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text>User is logged in</Text>
+      </View>
+    </>
   );
 }
