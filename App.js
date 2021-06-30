@@ -72,10 +72,10 @@ export default function App() {
   }
 
   return (
-    <>
+    <Provider store={store}>
       {checkLoaded()}
       {checkLogin()}
       <MainScreen />
-    </>
+    </Provider>
   );
 }
